@@ -1,3 +1,10 @@
+<meta http-equiv="refresh" content="3; URL='index.html'" />
+
+# Page Redirecting...
+You will be redirected to the home page in 3 seconds. 
+If not, [click here](index.html).
+
+
 # Ramprasun Sribhasyam
 
 **VP / Lead BI, Analytics and Automation**  
