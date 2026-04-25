@@ -56,14 +56,14 @@
     /* ─── THEME SWITCHER PILL ─── */
     #theme-switcher {
       position: fixed;
-      top: 18px; left: 50%;
+      bottom: 24px; left: 50%;
       transform: translateX(-50%);
       z-index: 200;
       display: flex; align-items: center; gap: 0;
       background: var(--bg-dark);
       border-radius: 100px;
       padding: 6px 6px 6px 16px;
-      box-shadow: 0 4px 28px rgba(0,0,0,0.22);
+      box-shadow: 0 -2px 28px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.18);
       transition: background 0.55s;
     }
 
@@ -366,6 +366,88 @@
     /* Certifications */
     #certifications { background: var(--bg-alt); }
 
+    /* Projects */
+    #projects { background: var(--bg); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .proj-card {
+      background: var(--bg);
+      padding: 36px 32px;
+      display: flex; gap: 20px;
+      opacity: 0; transform: translateY(18px);
+      transition: opacity 0.5s, transform 0.5s, background 0.55s;
+      position: relative; overflow: hidden;
+    }
+
+    .proj-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+
+    .proj-card:hover::after { opacity: 1; }
+    .proj-card:hover { background: var(--bg-alt); }
+    .proj-card.visible { opacity: 1; transform: translateY(0); }
+
+    .proj-num {
+      font-family: var(--display-font);
+      font-size: 42px; color: var(--bg-card);
+      line-height: 1; flex-shrink: 0; user-select: none;
+      transition: color 0.55s, font-family 0.1s;
+    }
+
+    .proj-title {
+      font-size: 15px; font-weight: 600; color: var(--fg);
+      margin-bottom: 8px; line-height: 1.3;
+      transition: color 0.55s;
+    }
+
+    .proj-tags {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
+    }
+
+    .proj-tags span {
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 100px;
+      background: var(--accent-pale); color: var(--accent);
+      font-weight: 600;
+      transition: background 0.55s, color 0.55s;
+    }
+
+    .proj-desc {
+      font-size: 13px; line-height: 1.72; color: var(--fg-soft);
+      font-weight: 300; transition: color 0.55s;
+    }
+
+    /* Education */
+    .edu-row {
+      margin-bottom: 40px;
+      padding: 28px 32px;
+      background: var(--bg-card);
+      border-radius: 8px;
+      display: flex; align-items: center; gap: 24px;
+      transition: background 0.55s;
+    }
+
+    .edu-label {
+      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--fg-muted); font-weight: 600; flex-shrink: 0;
+      transition: color 0.55s;
+    }
+
+    .edu-degree {
+      font-family: var(--display-font);
+      font-size: 22px; color: var(--fg);
+      transition: color 0.55s, font-family 0.1s;
+    }
+
     .cert-item {
       display: flex; align-items: center; gap: 22px;
       padding: 26px 0; border-bottom: 1px solid var(--border);
@@ -428,10 +510,11 @@
       .exp-meta { display: flex; gap: 14px; align-items: center; }
       .skills-layout { grid-template-columns: 1fr; }
       .leadership-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
       .nav-dots { display: none; }
       .container { padding: 0 20px; }
       section { padding: 64px 0; }
-      #theme-switcher { top: 10px; padding: 5px 5px 5px 12px; }
+      #theme-switcher { bottom: 14px; padding: 5px 5px 5px 12px; }
       #theme-dots { display: none; }
     }
   </style>
@@ -453,6 +536,7 @@
     <button class="nav-dot" data-target="experience"></button>
     <button class="nav-dot" data-target="skills"></button>
     <button class="nav-dot" data-target="leadership"></button>
+    <button class="nav-dot" data-target="projects"></button>
     <button class="nav-dot" data-target="certifications"></button>
   </nav>
 
@@ -460,7 +544,7 @@
   <div class="hero" id="hero">
     <div class="hero-left">
       <div class="hero-deco">25</div>
-      <div class="eyebrow">Open to senior leadership roles</div>
+      <div class="eyebrow">Milwaukee, WI · Open to senior roles</div>
       <h1 class="hero-name">Ramprasun<br><em>Sribhasyam</em></h1>
       <p class="hero-title">VP / Lead BI, Analytics &amp; Automation<br>Power Platform · Banking &amp; Financial Services</p>
       <div class="hero-contact">
@@ -469,6 +553,24 @@
             <svg viewBox="0 0 20 20"><path d="M2 5l8 5 8-5M2 5h16v11H2V5z"/></svg>
           </span>
           ramprasun@yahoo.com
+        </a>
+        <a class="contact-item" href="tel:2624095019">
+          <span class="contact-icon">
+            <svg viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.5a1 1 0 011 .9l.5 3.5a1 1 0 01-.29.87L5.5 8.5a11 11 0 005 5l1.2-1.2a1 1 0 01.87-.3l3.5.5a1 1 0 01.9 1V17a1 1 0 01-1 1C7.16 18 2 12.84 2 6.5V3z"/></svg>
+          </span>
+          262-409-5019
+        </a>
+        <a class="contact-item" href="https://linkedin.com/in/ramprasun" target="_blank" rel="noopener">
+          <span class="contact-icon">
+            <svg viewBox="0 0 20 20"><path d="M16 2H4a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2zM7 15H5v-6h2v6zm-1-7a1 1 0 110-2 1 1 0 010 2zm9 7h-2v-3.5c0-1-.8-1.5-1.5-1.5S10 10.5 10 11.5V15H8V9h2v1c.4-.7 1.3-1 2-1 1.7 0 3 1.1 3 3v3z"/></svg>
+          </span>
+          linkedin.com/in/ramprasun
+        </a>
+        <a class="contact-item" href="https://ramprasun-y.github.io/ram" target="_blank" rel="noopener">
+          <span class="contact-icon">
+            <svg viewBox="0 0 20 20"><path d="M10 2C5.58 2 2 5.58 2 10c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.64 7.64 0 012-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0018 10c0-4.42-3.58-8-8-8z"/></svg>
+          </span>
+          ramprasun-y.github.io/ram
         </a>
       </div>
     </div>
@@ -483,9 +585,9 @@
       </p>
       <div class="hero-stats">
         <div class="stat"><div class="stat-number">25<span>+</span></div><div class="stat-label">Years of<br>experience</div></div>
-        <div class="stat"><div class="stat-number">4</div><div class="stat-label">Professional<br>certifications</div></div>
-        <div class="stat"><div class="stat-number">2</div><div class="stat-label">Enterprise-scale<br>employers</div></div>
-        <div class="stat"><div class="stat-number">∞</div><div class="stat-label">Manhours saved<br>via automation</div></div>
+        <div class="stat"><div class="stat-number">7K<span>+</span></div><div class="stat-label">Annual hours<br>saved</div></div>
+        <div class="stat"><div class="stat-number">64<span>%</span></div><div class="stat-label">Productivity<br>boost delivered</div></div>
+        <div class="stat"><div class="stat-number">250<span>+</span></div><div class="stat-label">SAP tenants<br>migrated</div></div>
       </div>
     </div>
   </div>
@@ -503,24 +605,24 @@
       <div class="exp-grid">
         <div class="exp-item">
           <div class="exp-meta">
-            <div class="exp-period">Jun 2024<br>Present</div>
-            <span class="exp-tag">Current</span>
+            <div class="exp-period">2024<br>2026</div>
+            <span class="exp-tag">Latest</span>
           </div>
           <div class="exp-content">
             <div class="exp-role">VP, Lead BI, Analytics<br>&amp; Automation</div>
-            <div class="exp-company">Apple Bank</div>
-            <p class="exp-desc">Lead architect for enterprise analytics and automation platforms supporting core banking and business operations. Delivered multi-workflow, multi-queue, dynamic solutions with integrations across Power Apps, Power Automate, Power BI, ServiceNow, and various APIs — automating processes across departments and embedding an automation-first culture.</p>
+            <div class="exp-company">Apple Bank · New York, NY (Remote)</div>
+            <p class="exp-desc">Built governed, reliable automation and BI platforms across banking operations. Delivered low-cost, multi-workflow Power Platform solutions integrating Power Apps, Power Automate, Power BI, ServiceNow, and external APIs — saving <strong style="color:var(--accent)">7,000+ annual hours</strong> and boosting employee productivity by <strong style="color:var(--accent)">64%</strong>. Spearheaded the bank's AI transformation &amp; innovation drive and institutionalized citizen development. Power Apps served as a consolidated single point of solution for core processes, data wrangling, auditing, entitlements, and management dashboards.</p>
           </div>
         </div>
         <div class="exp-item">
           <div class="exp-meta">
-            <div class="exp-period">Oct 2010<br>May 2024</div>
+            <div class="exp-period">2010<br>2024</div>
             <span class="exp-tag">14 yrs</span>
           </div>
           <div class="exp-content">
-            <div class="exp-role">Senior BI / Data<br>Warehouse Specialist</div>
-            <div class="exp-company">FIS</div>
-            <p class="exp-desc">Led SAP BusinessObjects XI 4.2 → 4.3 migration using automated delta copy via custom .NET SDK tooling. Re-architected security with custom access levels and closed-down-rights methodology. Tuned services for peak workloads and established monitoring and alerting via SDK to reduce downtime.</p>
+            <div class="exp-role">Senior Business Intelligence<br>Specialist</div>
+            <div class="exp-company">FIS · Milwaukee, WI</div>
+            <p class="exp-desc">Led BusinessObjects XI 4.2 → 4.3 migration across <strong style="color:var(--accent)">250+ tenants</strong> with a parallel system and automated daily delta copy via custom .NET SDK tooling for low-risk cutover. Implemented multi-CMS, multi-node SAP BO XI 4.1 architecture. Re-architected security using custom access levels and closed-down-rights methodology. Tuned services for peak workloads and built SDK-driven monitoring and alerting to reduce downtime.</p>
           </div>
         </div>
       </div>
@@ -539,47 +641,48 @@
       </div>
       <div class="skills-layout">
         <div class="skill-group">
-          <div class="skill-group-label">Power Platform</div>
+          <div class="skill-group-label">AI & Automation</div>
           <div class="skill-tags">
-            <span class="skill-tag primary">Power BI</span>
+            <span class="skill-tag primary">Copilot Studio</span>
             <span class="skill-tag primary">Power Apps</span>
             <span class="skill-tag primary">Power Automate</span>
-            <span class="skill-tag primary">Copilot Studio</span>
-            <span class="skill-tag primary">Semantic Models / DAX</span>
+            <span class="skill-tag primary">UiPath</span>
           </div>
         </div>
         <div class="skill-group">
-          <div class="skill-group-label">Data & Warehousing</div>
+          <div class="skill-group-label">Business Intelligence</div>
           <div class="skill-tags">
-            <span class="skill-tag secondary">Snowflake</span>
-            <span class="skill-tag secondary">SQL Server</span>
-            <span class="skill-tag secondary">Oracle</span>
-            <span class="skill-tag secondary">Informatica</span>
-            <span class="skill-tag secondary">SSIS</span>
+            <span class="skill-tag secondary">Power BI</span>
+            <span class="skill-tag secondary">Semantic Models / DAX</span>
+            <span class="skill-tag secondary">SAP BusinessObjects 6.5–XI 4.3</span>
+            <span class="skill-tag secondary">BOE SDK</span>
+            <span class="skill-tag secondary">BOE REST API</span>
           </div>
         </div>
         <div class="skill-group">
-          <div class="skill-group-label">SAP Ecosystem</div>
+          <div class="skill-group-label">Databases & ETL</div>
           <div class="skill-tags">
-            <span class="skill-tag tertiary">SAP BusinessObjects 6.5–XI 4.3</span>
-            <span class="skill-tag tertiary">BOE SDK</span>
-            <span class="skill-tag tertiary">BOE REST API</span>
-            <span class="skill-tag tertiary">UiPath</span>
+            <span class="skill-tag tertiary">Snowflake</span>
+            <span class="skill-tag tertiary">Oracle</span>
+            <span class="skill-tag tertiary">SQL Server</span>
+            <span class="skill-tag tertiary">Informatica</span>
+            <span class="skill-tag tertiary">SSIS</span>
           </div>
         </div>
         <div class="skill-group">
-          <div class="skill-group-label">Development & DevOps</div>
+          <div class="skill-group-label">Languages & DevOps</div>
           <div class="skill-tags">
             <span class="skill-tag neutral">Python</span>
             <span class="skill-tag neutral">PowerShell</span>
+            <span class="skill-tag neutral">SQL / PL/SQL</span>
             <span class="skill-tag neutral">C# / .NET</span>
-            <span class="skill-tag neutral">PL/SQL</span>
             <span class="skill-tag neutral">Java</span>
             <span class="skill-tag neutral">JavaScript</span>
             <span class="skill-tag neutral">Azure DevOps</span>
             <span class="skill-tag neutral">Bitbucket</span>
             <span class="skill-tag neutral">Jenkins</span>
             <span class="skill-tag neutral">JIRA</span>
+            <span class="skill-tag neutral">Rally</span>
           </div>
         </div>
       </div>
@@ -621,14 +724,91 @@
     </div>
   </section>
 
-  <!-- ─── CERTIFICATIONS ─── -->
-  <section id="certifications">
+  <!-- ─── PROJECTS ─── -->
+  <section id="projects">
     <div class="container">
       <div class="section-header">
         <div class="section-number">04</div>
         <div class="section-title-group">
+          <div class="section-eyebrow">Work</div>
+          <h2 class="section-title">Notable<br>Projects</h2>
+        </div>
+      </div>
+      <div class="projects-grid">
+        <div class="proj-card">
+          <div class="proj-num">01</div>
+          <div class="proj-body">
+            <div class="proj-title">Vibe &amp; Code Power Apps Strategy</div>
+            <div class="proj-tags"><span>Power Apps</span><span>AI</span><span>Strategy</span></div>
+            <p class="proj-desc">Evaluating vibe-coding and AI-assisted development approaches to Power Apps to implement a fast-to-market strategy with minimal resource strain — aligning innovation speed with enterprise governance.</p>
+          </div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">02</div>
+          <div class="proj-body">
+            <div class="proj-title">Power Platform Automations</div>
+            <div class="proj-tags"><span>Power Apps</span><span>Power Automate</span><span>No-code / Low-code</span></div>
+            <p class="proj-desc">No-code and low-code automations using Power Automate and Power Apps. Productionized several manual and labor-intensive processes — transforming resource-demanding workflows into high-efficiency showcases, generating huge savings and paving the path for enterprise-wide automation adoption.</p>
+          </div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">03</div>
+          <div class="proj-body">
+            <div class="proj-title">Power Apps — Customer Request Management</div>
+            <div class="proj-tags"><span>Power Apps</span><span>Core Banking API</span><span>Automation</span></div>
+            <p class="proj-desc">Consolidates customer due diligence requests from multiple teams. Implements business and auto-management rules to handle the majority of traditional team responsibilities. Integrates with the core banking system in a closed-loop automation.</p>
+          </div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">04</div>
+          <div class="proj-body">
+            <div class="proj-title">Power Apps — Transaction Management</div>
+            <div class="proj-tags"><span>Power Apps</span><span>Power Automate</span><span>Power BI</span></div>
+            <p class="proj-desc">Consolidated 50+ Power Automate flows into a unified GUI serving multiple teams, groups, and branches. Replaced email and shared-Excel collaboration with a single collaborative platform — cutting <strong>7,000+ annual resource hours</strong> and freeing teams for higher-value work.</p>
+          </div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">05</div>
+          <div class="proj-body">
+            <div class="proj-title">Parallel SAP BusinessObjects Migrations</div>
+            <div class="proj-tags"><span>SAP BO</span><span>.NET SDK</span><span>250+ Tenants</span></div>
+            <p class="proj-desc">Solutioned, managed, and maintained multiple upgrade migrations across 250+ tenants using parallel systems during multi-wave iterations. Leveraged SDK tools to copy and validate repositories in chunks grouped by tenant for zero-disruption cutover.</p>
+          </div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">06</div>
+          <div class="proj-body">
+            <div class="proj-title">Multi-tenant SAP BO Administration</div>
+            <div class="proj-tags"><span>SAP BO</span><span>BOE SDK</span><span>Enterprise Scale</span></div>
+            <p class="proj-desc">Managed 250+ tenants and thousands of users efficiently using SDK tools and creative automation solutions, dramatically reducing administrative overhead.</p>
+          </div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">07</div>
+          <div class="proj-body">
+            <div class="proj-title">Enterprise BI &amp; Analytics Platform</div>
+            <div class="proj-tags"><span>Power BI</span><span>DAX</span><span>Semantic Models</span></div>
+            <p class="proj-desc">Architected, designed, and delivered reports and analytic visualizations across banking and financial services, implementing well-architected framework principles to modernize reporting and embed data-driven culture.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EDUCATION & CERTIFICATIONS ─── -->
+  <section id="certifications">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div class="section-title-group">
           <div class="section-eyebrow">Credentials</div>
-          <h2 class="section-title">Professional<br>Certifications</h2>
+          <h2 class="section-title">Education &amp;<br>Certifications</h2>
+        </div>
+      </div>
+      <div class="edu-row">
+        <div class="edu-block">
+          <div class="edu-label">Education</div>
+          <div class="edu-degree">Mechanical Engineering</div>
         </div>
       </div>
       <div class="cert-list">
@@ -644,9 +824,13 @@
   <footer>
     <div class="container footer-inner">
       <div class="footer-name">Ramprasun Sribhasyam</div>
-      <div class="footer-role">VP · BI · Analytics · Automation</div>
-      <a class="footer-email" href="mailto:ramprasun@yahoo.com">ramprasun@yahoo.com</a>
-      <div class="footer-copy">© 2025 Ramprasun Sribhasyam · Built by Ram for GitHub Pages</div>
+      <div class="footer-role">VP · BI · Analytics · Automation · Milwaukee, WI</div>
+      <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:8px;">
+        <a class="footer-email" href="mailto:ramprasun@yahoo.com">ramprasun@yahoo.com</a>
+        <a class="footer-email" href="https://linkedin.com/in/ramprasun" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="footer-email" href="https://ramprasun-y.github.io/ram" target="_blank" rel="noopener">Portfolio</a>
+      </div>
+      <div class="footer-copy">© 2026 Ramprasun Sribhasyam · Built for GitHub Pages</div>
     </div>
   </footer>
 
@@ -821,22 +1005,123 @@
     });
   }
 
-  function switchTheme(idx) {
+
+
+  /* ── Slow crossfade transition override ── */
+  /* For auto-rotation we use a longer 2s fade injected via a class */
+  const slowStyle = document.createElement('style');
+  slowStyle.textContent = `
+    .slow-fade, .slow-fade * {
+      transition:
+        background 2s ease,
+        color 2s ease,
+        border-color 2s ease,
+        fill 2s ease,
+        stroke 2s ease !important;
+    }
+  `;
+  document.head.appendChild(slowStyle);
+
+  /* Apply theme — auto=true uses 2s slow crossfade, manual uses normal speed */
+  function switchTheme(idx, auto = false) {
     currentIdx = idx;
     const theme = THEMES[idx];
     const root = document.documentElement;
 
-    for (const [k, v] of Object.entries(theme.vars)) root.style.setProperty(k, v);
+    if (auto) {
+      document.body.classList.add('slow-fade');
+      setTimeout(() => document.body.classList.remove('slow-fade'), 2200);
+    }
 
+    for (const [k, v] of Object.entries(theme.vars)) root.style.setProperty(k, v);
     document.getElementById('theme-name').textContent = theme.name;
     updateDots();
 
-    // Pill pop animation
-    const pill = document.getElementById('theme-switcher');
-    pill.style.animation = 'none';
-    void pill.offsetWidth;
-    pill.style.animation = 'pillPop 0.3s ease both';
+    if (!auto) {
+      const pill = document.getElementById('theme-switcher');
+      pill.style.animation = 'none';
+      void pill.offsetWidth;
+      pill.style.animation = 'pillPop 0.3s ease both';
+    }
+
+    resetAutoTimer();
   }
+
+  /* ── Auto-rotation: random 60–120 s interval ── */
+  let autoTimer = null;
+  let paused = false;
+  let nextDelay = 0;
+  let timerStart = 0;
+  let elapsed = 0;
+
+  /* Progress ring on the pill */
+  const ring = document.createElement('svg');
+  ring.setAttribute('width', '28');
+  ring.setAttribute('height', '28');
+  ring.style.cssText = 'margin-left:6px;margin-right:2px;flex-shrink:0;opacity:0.55;';
+  ring.innerHTML = `
+    <circle cx="14" cy="14" r="10" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+    <circle id="ring-arc" cx="14" cy="14" r="10" fill="none"
+      stroke="rgba(255,255,255,0.7)" stroke-width="2"
+      stroke-dasharray="62.83" stroke-dashoffset="62.83"
+      stroke-linecap="round"
+      transform="rotate(-90 14 14)"/>
+  `;
+  document.getElementById('theme-switcher').appendChild(ring);
+  const arc = document.getElementById('ring-arc');
+  const CIRC = 62.83;
+
+  let rafId = null;
+  function animateRing() {
+    const now = Date.now();
+    const frac = Math.min((now - timerStart) / nextDelay, 1);
+    arc.setAttribute('stroke-dashoffset', CIRC * (1 - frac));
+    rafId = requestAnimationFrame(animateRing);
+  }
+
+  function scheduleNext() {
+    nextDelay = (60 + Math.random() * 60) * 1000; // 60–120s
+    timerStart = Date.now();
+    cancelAnimationFrame(rafId);
+    animateRing();
+    autoTimer = setTimeout(() => {
+      if (!paused) {
+        let next;
+        do { next = Math.floor(Math.random() * THEMES.length); } while (next === currentIdx && THEMES.length > 1);
+        switchTheme(next, true);
+      }
+    }, nextDelay);
+  }
+
+  function resetAutoTimer() {
+    clearTimeout(autoTimer);
+    cancelAnimationFrame(rafId);
+    arc.setAttribute('stroke-dashoffset', CIRC);
+    scheduleNext();
+  }
+
+  /* Pause on pill hover */
+  const pill = document.getElementById('theme-switcher');
+  pill.addEventListener('mouseenter', () => {
+    paused = true;
+    clearTimeout(autoTimer);
+    cancelAnimationFrame(rafId);
+    elapsed = Date.now() - timerStart;
+    arc.style.opacity = '0.3';
+  });
+  pill.addEventListener('mouseleave', () => {
+    paused = false;
+    arc.style.opacity = '';
+    // Resume remaining time
+    const remaining = Math.max(nextDelay - elapsed, 3000);
+    autoTimer = setTimeout(() => {
+      let next;
+      do { next = Math.floor(Math.random() * THEMES.length); } while (next === currentIdx && THEMES.length > 1);
+      switchTheme(next, true);
+    }, remaining);
+    timerStart = Date.now() - elapsed;
+    animateRing();
+  });
 
   /* Apply random theme on load (instant, no transition flash) */
   (() => {
@@ -844,16 +1129,17 @@
     const root = document.documentElement;
     for (const [k, v] of Object.entries(theme.vars)) root.style.setProperty(k, v);
     document.getElementById('theme-name').textContent = theme.name;
+    scheduleNext();
   })();
 
   document.getElementById('btn-next').addEventListener('click', () => {
-    switchTheme((currentIdx + 1) % THEMES.length);
+    switchTheme((currentIdx + 1) % THEMES.length, false);
   });
 
   document.getElementById('btn-random').addEventListener('click', () => {
     let next;
     do { next = Math.floor(Math.random() * THEMES.length); } while (next === currentIdx && THEMES.length > 1);
-    switchTheme(next);
+    switchTheme(next, false);
   });
 
   /* ── Scroll animations ── */
@@ -866,13 +1152,13 @@
     });
   }, { threshold: 0.12 });
 
-  document.querySelectorAll('.exp-item, .skill-group, .leadership-card, .cert-item').forEach((el, i) => {
+  document.querySelectorAll('.exp-item, .skill-group, .leadership-card, .cert-item, .proj-card').forEach((el, i) => {
     el.dataset.delay = (i % 4) * 80;
     obs.observe(el);
   });
 
   /* ── Nav dots ── */
-  const SECS = ['hero','experience','skills','leadership','certifications'];
+  const SECS = ['hero','experience','skills','leadership','projects','certifications'];
   const navDots = document.querySelectorAll('.nav-dot');
 
   navDots.forEach(d => d.addEventListener('click', () => {
